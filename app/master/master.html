@@ -1,0 +1,113 @@
+<alert></alert>
+<section data-ng-init="init();" style="margin-top: 70px;">
+    <div class="container">
+        <div class="row well">
+            <div class="col-sm-12 col-md-12">
+                <form class="form-inline" name="masterForm" novalidate>
+                    <div class="form-group">
+                        <div class="radio radio-primary radio-inline">  
+                            <input type="radio" 
+                               name="EnumType"
+                               id="radio_saque"
+                               data-ng-value="EnumType.SAQUE"
+                               data-ng-model="entity.type">
+                            <label for="radio_saque">SAQUE</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" 
+                               name="EnumType"
+                               id="radio_deposito"
+                               data-ng-value="EnumType.DEPOSITO"
+                               data-ng-model="entity.type">
+                            <label for="radio_deposito">DEPÓSITO</label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:5px; margin-left:20px;">
+                      <label>Valor</label>
+                      <input type="text" 
+                             id="entity_value"
+                             name="entity_value" 
+                             class="form-control" 
+                             data-ng-model="entity.value"
+                             placeholder="Digite um valor.."
+                             required>
+                    </div>
+                    <div class="form-group" style="margin-top:5px;">
+                      <button type="submit" 
+                              class="btn btn-danger"
+                              data-ng-click="add();">Adicionar</button>
+                    </div>
+                  </form>  
+            </div>  
+        </div>
+        <div class="row" data-ng-if="entities.length > 0">
+            <div class="col-sm-12 col-md-12">
+                <table class="table table-hover table-striped table-inverse">
+                    <colgroup>
+                        <col width="35%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="5%">
+                    </colgroup>
+                    <tfoot>
+                        <tr style="background-color: yellowgreen; font-size: 24px;">
+                            <td colspan="1">Total em conta</td>
+                            <td colspan="3">
+                                {{getTotal()}}
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="($indexEntity, entity) in entities track by $indexEntity">
+                            <td>{{entity.type}}</td>
+                            <td>{{entity.value}}</td>
+                            <td>{{entity.createDate}}</td>
+                            <td>
+                                <i class="glyphicon glyphicon-trash" 
+                                   style="cursor:pointer"
+                                   data-ng-click="confirm(entity, $indexEntity);"
+                                   data-trigger="hover" 
+                                   data-type="success" 
+                                   data-title="Remove a linha"
+                                   data-animation="am-fade" 
+                                   data-placement="top" 
+                                   data-container="body" 
+                                   data-bs-tooltip>
+                                </i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="modal-remove" data-backdrop="static" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Deseja realmente remover esse item?</h4>
+                </div>
+                <div class="modal-body">
+                    <p> {{current.type}} - {{current.value}} - {{current.createDate}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-ng-click="cancel();">Não</button>
+                    <button type="button" class="btn btn-primary" data-ng-click="remove();">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() { $('#entity_value').maskMoney(); });
+    </script>
+</section>
