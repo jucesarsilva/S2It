@@ -1,5 +1,5 @@
 {
-  "name": "app-trakt",
+  "name": "s2it",
   "private": true,
   "version": "1.0.0",
   "description": "Utilização da API https://trakt.tv/ com AngularJS",
@@ -14,6 +14,7 @@
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
+    "karma-mocha-reporter": "^2.2.0",
     "protractor": "^4.0.9"
   },
   "scripts": {

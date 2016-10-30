@@ -59,11 +59,11 @@
          * @returns
          */
         function add() {
-            if(!validate()) return;
+            if(!$scope.validate()) return;
             $scope.entity.createDate = moment(new Date()).format("DD/MM/YYYY - HH:mm:ss");
             $scope.entities.push(angular.copy($scope.entity));
             localStorage.setItem("S2it_entities", JSON.stringify($scope.entities));
-            clear();
+            $scope.clear();
         }; $scope.add = add;
         
         /**
@@ -75,7 +75,7 @@
         function confirm(_entity, _index) {
             $scope.current = angular.copy(_entity);
             $scope.current.index = _index;
-            angular.element("#modal-remove").modal({backdrop:"static"});
+            $("#modal-remove").modal({backdrop:"static"});
         }; $scope.confirm = confirm;
         
         /**
@@ -98,7 +98,7 @@
             $scope.entities.splice($scope.current.index, 1);
             localStorage.setItem("S2it_entities", JSON.stringify($scope.entities));
             $scope.current = null;
-            angular.element("#modal-remove").modal("hide");
+            $("#modal-remove").modal("hide");
         }; $scope.remove = remove;
         
         /**
@@ -133,7 +133,7 @@
                 DEPOSITO: "depósito"
             };
             $scope.entities = JSON.parse(localStorage.getItem("S2it_entities")) || [];
-            clear();
+            $scope.clear();
             $notification.clear();
         }; $scope.init = init;
         
