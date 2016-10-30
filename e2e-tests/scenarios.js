@@ -16,8 +16,11 @@ describe('S2it', function() {
     });
 
     it('should render master.html when user navigates to /master', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for master/);
+      expect(element
+             .all(by.css('[ng-view] p'))
+             .first()
+             .getText())
+             .toMatch(/partial for master/);
     });
 
   });

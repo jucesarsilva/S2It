@@ -52,7 +52,8 @@
                         <col width="5%">
                     </colgroup>
                     <tfoot>
-                        <tr style="background-color: yellowgreen; font-size: 24px;">
+                        <tr style="font-size: 24px;"
+                            data-ng-class="{'positive': total > 0, 'negative': total <= 0 }">
                             <td colspan="1">Total em conta</td>
                             <td colspan="3">
                                 {{getTotal()}}
@@ -61,21 +62,39 @@
                     </tfoot>
                     <thead>
                         <tr>
-                            <th>Tipo</th>
-                            <th>Valor</th>
-                            <th>Data</th>
+                            <th>
+                                <a href="javascript:void(0)"  style="text-decoration:none"
+                                   data-ng-click="sortType = 'type'; sortReverse = !sortReverse;">Tipo 
+                                    <span data-ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span data-ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:void(0)" style="text-decoration:none"
+                                   data-ng-click="sortType = 'value'; sortReverse = !sortReverse">Valor 
+                                    <span data-ng-show="sortType == 'value' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span data-ng-show="sortType == 'value' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:void(0)" style="text-decoration:none"
+                                   data-ng-click="sortType = 'createDate'; sortReverse = !sortReverse">Data 
+                                    <span data-ng-show="sortType == 'createDate' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span data-ng-show="sortType == 'createDate' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                                </a>
+                            </th>
                             <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-ng-repeat="($indexEntity, entity) in entities track by $indexEntity">
+                        <tr dir-paginate="($entityIndex, entity) in entities | orderBy:sortType:sortReverse | itemsPerPage: pageSize track by $entityIndex" current-page="currentPage">
                             <td>{{entity.type}}</td>
                             <td>{{entity.value}}</td>
                             <td>{{entity.createDate}}</td>
                             <td>
                                 <i class="glyphicon glyphicon-trash" 
                                    style="cursor:pointer"
-                                   data-ng-click="confirm(entity, $indexEntity);"
+                                   data-ng-click="confirm(entity, $entityIndex);"
                                    data-trigger="hover" 
                                    data-type="success" 
                                    data-title="Remove a linha"
@@ -88,6 +107,19 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-sm-12 col-md-12 text-center">
+                <div class="pull-left">Total({{entities.length}})</div>
+                <div style="margin-top:-30px;">
+                    <dir-pagination-controls 
+                         boundary-links="true" 
+                         auto-hide="false"
+                         template-url="components/directives/pagination/dirPagination.tpl.html">
+                    </dir-pagination-controls>
+                </div>
+                <div class="pull-right" style="margin-top:-50px;">
+                    <select ng-model="pageSize" ng-options="pageSize for pageSize in [5,10,20,50,100]"></select>
+                </div>
             </div>
         </div>
     </div>

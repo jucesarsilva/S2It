@@ -8,7 +8,7 @@
     
     'use strict';
 
-    angular.module(modules.master, ['ngRoute', 'tooltip'])
+    angular.module(modules.master, ['ngRoute', 'tooltip', 'angularUtils.directives.dirPagination'])
 
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider.when('/master', {
@@ -107,15 +107,15 @@
          * @returns
          */
         function getTotal(){
-            var total = 0;
+            $scope.total = 0;
             for(var i = 0; i < $scope.entities.length; i++){
                 var vl = $scope.entities[i].value.replace(',','');
                 if(!isNaN(vl) && vl.length!=0) {
-                    if($scope.entities[i].type === $scope.EnumType.SAQUE) total-=parseFloat(vl);
-                    else if($scope.entities[i].type === $scope.EnumType.DEPOSITO) total+=parseFloat(vl);
+                    if($scope.entities[i].type === $scope.EnumType.SAQUE) $scope.total-=parseFloat(vl);
+                    else if($scope.entities[i].type === $scope.EnumType.DEPOSITO) $scope.total+=parseFloat(vl);
                 }
             }
-            return total.toFixed(2).replace(",", ".").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            return $scope.total.toFixed(2).replace(",", ".").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
         }; $scope.getTotal = getTotal;
         
         /**
@@ -124,6 +124,10 @@
          * @returns
          */
         function init() {
+            $scope.sortType = 'type';
+            $scope.sortReverse = false; 
+            $scope.currentPage = 1;
+            $scope.pageSize = 5;
             $scope.EnumType = {
                 SAQUE: "saque",
                 DEPOSITO: "depósito"
@@ -132,6 +136,7 @@
             clear();
             $notification.clear();
         }; $scope.init = init;
+        
     };
     
 })();

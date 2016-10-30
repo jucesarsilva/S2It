@@ -9,3 +9,11 @@
 .main-content {
     margin-top: 51px;
 }
+
+.negative {
+    background-color: #ff4c4c
+}
+
+.positive {
+    background-color: #42ff75
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module(modules.directives, ['tooltip'])
+    .module("popover", ['tooltip'])
     .provider('$popover', function () {
 
       var defaults = this.defaults = {
