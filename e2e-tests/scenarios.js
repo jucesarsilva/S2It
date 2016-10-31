@@ -15,13 +15,34 @@ describe('S2it', function() {
       browser.get('/#!/master');
     });
 
-    it('should render master.html when user navigates to /master', function() {
-      expect(element
-             .all(by.css('[ng-view] p'))
-             .first()
-             .getText())
-             .toMatch(/partial for master/);
+    it('should have a title', function() {
+        expect(browser.getTitle()).toEqual('S2it');
     });
+      
+    it('should add one entity for "saque" ', function() {
+        browser.executeScript(function () {
+            window.localStorage.clear();
+        });
+        element(by.model('entity.value')).sendKeys("1,500.00");
+        element(by.id('adicionar')).click();
+        var entities = element.all(by.repeater('($entityIndex, entity) in entities | orderBy:sortType:sortReverse | itemsPerPage: pageSize track by $entityIndex'));
+        expect(entities.count()).toEqual(1);
+    }); 
+      
+    it('should add one entity of "Saque" and exclude one', function() {
+        browser.executeScript(function () {
+            window.localStorage.clear();
+        });
+        element(by.model('entity.value')).sendKeys("2,000.00");
+        element(by.id('adicionar')).click();
+        element(by.id('entity_btn_remove_0')).click();
+        var EC = protractor.ExpectedConditions;
+        var btn_confirm = element(by.id('btn_remove'));
+        browser.wait(EC.visibilityOf(btn_confirm), 500);
+        btn_confirm.click();
+        var entities = element.all(by.repeater('($entityIndex, entity) in entities | orderBy:sortType:sortReverse | itemsPerPage: pageSize track by $entityIndex'));
+        expect(entities.count()).toEqual(1);
+    }); 
 
   });
 });

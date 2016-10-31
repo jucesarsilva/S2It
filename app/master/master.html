@@ -37,6 +37,7 @@
                     </div>
                     <div class="form-group" style="margin-top:5px;">
                       <button type="submit" 
+                              id="adicionar"
                               class="btn btn-danger"
                               data-ng-click="add();">Adicionar</button>
                     </div>
@@ -93,7 +94,8 @@
                             <td>{{entity.value}}</td>
                             <td>{{entity.createDate}}</td>
                             <td>
-                                <i class="glyphicon glyphicon-trash" 
+                                <i id="entity_btn_remove_{{$entityIndex}}"
+                                   class="glyphicon glyphicon-trash" 
                                    style="cursor:pointer"
                                    data-ng-click="confirm(entity, $entityIndex);"
                                    data-trigger="hover" 
@@ -134,8 +136,8 @@
                     <p> {{current.type}} - {{current.value}} - {{current.createDate}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-ng-click="cancel();">Não</button>
-                    <button type="button" class="btn btn-primary" data-ng-click="remove();">Sim</button>
+                    <button id="btn_cancel" type="button" class="btn btn-default" data-ng-click="cancel();">Não</button>
+                    <button id="btn_remove" type="button" class="btn btn-primary" data-ng-click="remove();">Sim</button>
                 </div>
             </div>
         </div>
